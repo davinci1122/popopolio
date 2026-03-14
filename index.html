@@ -870,6 +870,48 @@
       align-items: center;
       justify-content: center;
     }
+
+    /* ===== GACHA BUTTON STYLE ===== */
+    .gacha-btn-container {
+      text-align: center;
+      /* ボタンを中央寄せにする場合 */
+      margin-top: 20px;
+    }
+
+    .gacha-push-btn {
+      display: inline-block;
+      position: relative;
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: 1.1rem;
+      color: var(--bg);
+      /* 文字色は背景色（濃い茶色） */
+      text-decoration: none;
+      background-color: var(--orange);
+      /* ボタンの基本色 */
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      /* 少し角丸 */
+
+      /* 立体感を出すための影（ボタンの厚み） */
+      box-shadow: 0 6px 0 var(--orange-dark);
+
+      /* クリック時のアニメーション設定 */
+      transition: all 0.1s ease;
+      cursor: pointer;
+    }
+
+    /* ホバー時（マウスを乗せた時）の少し明るくなる演出 */
+    .gacha-push-btn:hover {
+      background-color: var(--orange-bright);
+    }
+
+    /* ★アクティブ時（クリックした瞬間）の押し込まれる演出 */
+    .gacha-push-btn:active {
+      /* 影を小さくして、位置を少し下に下げることで「押し込んだ」感を出す */
+      box-shadow: 0 2px 0 var(--orange-dark);
+      transform: translateY(4px);
+    }
   </style>
 </head>
 
@@ -941,12 +983,16 @@
         <h2 class="section-title reveal">自己紹介ガチャ</h2>
         <div class="divider reveal"></div>
 
-        <p class="about-bio reveal" id="bioText">
+        <div class="about-bio reveal" id="bioText">
           一回のクリックに100円もらえたらなぁ<br>
-          <span class="bio-clickable" id="bioClickable" onclick="changeBio()">【クリックしてガチャを引く】</span>
-        </p>
-        <p class="bio-hint reveal">↓SKILLS</p>
+          <div class="gacha-btn-container">
+            <button class="gacha-push-btn" id="bioClickable" onclick="changeBio()">
+              クリックしてガチャを引く
+            </button>
+          </div>
+        </div>
 
+        <p class="bio-hint reveal">↓SKILLS</p>
         <div class="skills-list reveal-group">
           <span class="skill-tag">電子工作</span>
           <span class="skill-tag">カードゲームスキル</span>
@@ -1174,22 +1220,43 @@
     }
 
     // ===== RANDOM BIO =====
+    // ===== RANDOM BIO (ランダムガチャ版) =====
     const bios = [
-      ['ここに自己紹介が入ります。', '変なものを描くのが好きです。'],
-      ['血液型：謎。', '好きな食べ物：もう忘れた。'],
-      ['本業は人間です。', '副業でイラストを描いています。'],
-      ['右も左もわからないまま', 'なんとなく生きています。'],
-      ['モットーは「とりあえず描く」。', '深く考えると手が止まる。'],
-      ['好きなもの：変なもの全般。', '嫌いなもの：白紙。'],
+      ['ロフトワークのクリエイティブディレクターです。', 'どんなプロジェクトもバッチこい。'],
+      ['二つ名：賢そうなバカ・ダーティープロトタイパー、マッチ', 'おさなごころをポケットに。'],
+      ['スペキュラティブデザイン、SFプロトタイピング。', '胡散臭いけど、楽しいのもまた事実。'],
+      ['「無駄がなけりゃ意味がない」ーキラーチューン', 'いい歌詞よな。さすが東京事変。'],
+      ['ENFP。', '人口的には一番多い種類じゃない？ほんまに当たってるよなこれ。'],
+      ['家庭が大阪すぎる。', 'ボケとツッコミが乱れる毎日だった。'],
+      ['笑い飯・ジャルジャル・千鳥。', 'お笑い芸リスペクト。'],
+      ['神戸生まれ→大阪育ち→京都学び→東京働き。', '関西を周遊し、やはり東京へ。負けた気がする。'],
+      ['ボドゲが好き。カードゲームで育った。', 'ヤッツィー、遊戯王、麻雀、トランプが四種の神器。'],
+      ['実家が銭湯。廃業済み', 'サウナブームがもうちょっと早かったらな。'],
+      ['歌いがち。', 'マイケルジャクソンみたいに変な音はさみがち。']
     ];
-    let bioIdx = 0;
-    const bioClickable = document.getElementById('bioClickable');
+
+    let currentBioIdx = -1; // 現在表示されている番号を記憶
+
     function changeBio() {
-      bioIdx = (bioIdx + 1) % bios.length;
-      const b = bios[bioIdx];
-      bioClickable.previousSibling && null;
+      let newIdx;
+
+      do {
+        newIdx = Math.floor(Math.random() * bios.length);
+      } while (newIdx === currentBioIdx);
+
+      currentBioIdx = newIdx;
+      const b = bios[currentBioIdx];
       const p = document.getElementById('bioText');
-      p.innerHTML = b[0] + '<br>' + b[1] + '<br><span class="bio-clickable" id="bioClickable" onclick="changeBio()">【もう一回】</span>';
+
+      // 修正後のHTML構造
+      p.innerHTML = `
+    ${b[0]}<br>
+    ${b[1]}<br>
+    <div class="gacha-btn-container">
+      <button class="gacha-push-btn" onclick="changeBio()">もう一回ガチャを引く</button>
+    </div>
+  `;
+
       makeBeep('boing');
     }
 
