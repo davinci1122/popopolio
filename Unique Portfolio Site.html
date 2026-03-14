@@ -507,25 +507,68 @@
       transform: scale(1.02);
     }
 
+    /* ===== SNS ===== */
+    /* ===== CONTACTセクション全体の設定を追加 ===== */
+    #contact {
+      padding-bottom: 120px;
+      /* 下側にたっぷり余白を作る */
+    }
+
+    /* ここから下の .contact-sns は今のコードのままでOKですが、
+   margin-top を少し詰めるとボタンとの一体感が出ます */
     .contact-sns {
-      margin-top: 60px;
+      margin-top: 40px;
+      /* 60pxから40pxに少し詰めました */
       display: flex;
-      gap: 20px;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
     }
 
     .sns-link {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1rem;
-      letter-spacing: 0.2em;
-      color: var(--text-muted);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: color 0.2s, border-color 0.2s;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      cursor: none;
+    }
+
+    .sns-link svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--text-muted);
+      transition: fill 0.3s ease;
     }
 
     .sns-link:hover {
+      transform: translateY(-3px);
+      filter: drop-shadow(0 0 8px var(--orange));
+    }
+
+    .sns-link:hover svg {
+      fill: var(--orange);
+    }
+
+    /* 1.0サイトリンクのスタイル：青色と下線をサヨナラさせる */
+    .version-link {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      /* 下線を消す */
+      letter-spacing: 0.15em;
+      border-bottom: 1px solid transparent;
+      transition: all 0.3s ease;
+      line-height: 1;
+      margin-left: 8px;
+      cursor: none;
+    }
+
+    .version-link:hover {
       color: var(--orange);
-      border-color: var(--orange);
+      border-bottom-color: var(--orange);
+      filter: drop-shadow(0 0 5px var(--orange));
     }
 
     /* ===== DIVIDER ===== */
@@ -629,40 +672,10 @@
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
-    .reveal-group.visible>*:nth-child(1) {
+    .reveal-group.visible>* {
       opacity: 1;
       transform: translateY(0);
-      transition-delay: 0.0s;
-    }
-
-    .reveal-group.visible>*:nth-child(2) {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.1s;
-    }
-
-    .reveal-group.visible>*:nth-child(3) {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.2s;
-    }
-
-    .reveal-group.visible>*:nth-child(4) {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.3s;
-    }
-
-    .reveal-group.visible>*:nth-child(5) {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.4s;
-    }
-
-    .reveal-group.visible>*:nth-child(6) {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.5s;
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
     /* 1. 激しい揺れ（z-indexを上げて一番手前に表示させる） */
@@ -736,6 +749,81 @@
       animation: psych-flicker 0.1s infinite !important;
       /* 0.1秒ごとに色を変える */
     }
+
+    /* モーダル全体の背景（暗くする部分） */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 5, 2, 0.9);
+      z-index: 20000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* モーダルの箱 */
+    .modal-content {
+      background: var(--brown);
+      width: 100%;
+      max-width: 600px;
+      padding: 40px;
+      position: relative;
+      clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+      border: 1px solid var(--brown-mid);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.show .modal-content {
+      transform: translateY(0);
+    }
+
+    /* 閉じるボタン */
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--orange);
+      font-size: 2rem;
+      cursor: none;
+      font-family: 'Dela Gothic One', sans-serif;
+    }
+
+    /* モーダル内のテキスト */
+    #modal-title {
+      font-family: 'Dela Gothic One', sans-serif;
+      color: var(--orange);
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    #modal-description {
+      line-height: 1.8;
+      color: var(--cream);
+      white-space: pre-wrap;
+      /* 改行を反映させる */
+    }
+
+    #modal-image-wire {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--bg);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 </head>
 
@@ -798,7 +886,8 @@
           2024 / デジタル
         </div>
       </div>
-      <div class="work-card" data-sound="pop" onclick="playWorkSound(this)">
+      <div class="work-card" data-sound="pop" data-title="作品タイトル 01" data-desc="ここに詳しい説明文を入れます。改行もできます。"
+        onclick="playWorkSound(this)">
         <div class="work-card-inner">
           <img src="/Users/pastamac/Desktop/MY HP/WORKS/work_1.jpg" alt="Work 01"
             style="width: 100%; height: 100%; object-fit: cover;">
@@ -895,175 +984,248 @@
       <h2 class="section-title reveal">感想大歓迎です。</h2>
       <div class="divider reveal"></div>
 
-      <div class="contact-form reveal">
+      <form class="contact-form reveal" id="contactForm" action="https://formspree.io/f/mnjgzbej" method="POST">
         <div class="form-group">
           <label class="form-label">NAME</label>
-          <input class="form-input" type="text" placeholder="お名前（ニックネーム可）">
+          <input class="form-input" type="text" name="name" placeholder="お名前（ニックネーム可）" required>
         </div>
         <div class="form-group">
           <label class="form-label">EMAIL</label>
-          <input class="form-input" type="email" placeholder="メル友になりましょう">
+          <input class="form-input" type="email" name="email" placeholder="メル友になりましょう" required>
         </div>
         <div class="form-group">
           <label class="form-label">メッセージ</label>
-          <textarea class="form-textarea" placeholder="なんでも歓迎団"></textarea>
+          <textarea class="form-textarea" name="message" placeholder="なんでも歓迎団" required></textarea>
         </div>
-        <button class="submit-btn" onclick="handleSubmit(event)">送信する</button>
+        <button class="submit-btn" type="submit" onclick="handleSubmit(event)">送信する</button>
+      </form>
+
+      <div class="contact-sns reveal">
+        <a class="sns-link" href="https://x.com/O2daichiOo" target="_blank" aria-label="X">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+          </svg>
+        </a>
+
+        <a class="sns-link" href="https://www.instagram.com/daichides.1124/" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+          </svg>
+        </a>
+
+        <a class="version-link" href="https://davinci1122.github.io/" target="_blank">PORTFOLIO SITE VERSION 1.0</a>
       </div>
-
-      <div class="contact-sns">
-        <a class="sns-link" href="#">TWITTER / X</a>
-        <a class="sns-link" href="#">INSTAGRAM</a>
-        <a class="sns-link" href="#">PORTFOLIO SITE VERSION 1.0</a>
+    </div>
+  </section>
 
 
-        <script>
-          // ===== CURSOR =====
-          const cursor = document.getElementById('cursor');
-          document.addEventListener('mousemove', e => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-          });
+  <script>
+    // ===== CURSOR =====
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
 
-          // ===== LAUGH ON LOAD は削除しました =====
+    // ===== LAUGH ON LOAD は削除しました =====
 
-          function playLaugh() {
-            const overlay = document.getElementById('laugh-overlay');
-            const bgText = document.querySelector('.hero-bg-text');
+    function playLaugh() {
+      const overlay = document.getElementById('laugh-overlay');
+      const bgText = document.querySelector('.hero-bg-text');
 
-            // 音声を読み込む
-            const laugh = new Audio('laughs/laugh_1.mp3');
+      // 音声を読み込む
+      const laugh = new Audio('laughs/laugh_1.mp3');
 
-            // 1. 演出を開始
-            overlay.classList.add('show', 'psychedelic-bg'); // 背景を表示＋チカチカ開始
-            bgText.classList.add('shaking-text');           // 文字を一番手前で揺らす
+      // 1. 演出を開始
+      overlay.classList.add('show', 'psychedelic-bg'); // 背景を表示＋チカチカ開始
+      bgText.classList.add('shaking-text');           // 文字を一番手前で揺らす
 
-            laugh.play();
+      laugh.play();
 
-            // 2. 音が終わったらすべてを元に戻す
-            laugh.onended = function () {
-              overlay.classList.remove('show', 'psychedelic-bg');
-              bgText.classList.remove('shaking-text');
-            };
+      // 2. 音が終わったらすべてを元に戻す
+      laugh.onended = function () {
+        overlay.classList.remove('show', 'psychedelic-bg');
+        bgText.classList.remove('shaking-text');
+      };
 
-            // ※念のための予備：音が何らかの理由で鳴らなくても、5秒後には必ず止まるようにする
-            setTimeout(() => {
-              overlay.classList.remove('show', 'psychedelic-bg');
-              bgText.classList.remove('shaking-text');
-            }, 5000);
-          }
+      // ※念のための予備：音が何らかの理由で鳴らなくても、5秒後には必ず止まるようにする
+      setTimeout(() => {
+        overlay.classList.remove('show', 'psychedelic-bg');
+        bgText.classList.remove('shaking-text');
+      }, 5000);
+    }
 
-          // ===== WORK HOVER SOUND (Web Audio API でポップ音を生成) =====
-          function makeBeep(type) {
-            try {
-              const ctx = new (window.AudioContext || window.webkitAudioContext)();
-              const o = ctx.createOscillator();
-              const g = ctx.createGain();
-              o.connect(g); g.connect(ctx.destination);
-              const freq = type === 'boing' ? 200 : type === 'pop' ? 600 : 300;
-              o.frequency.setValueAtTime(freq, ctx.currentTime);
-              if (type === 'boing') o.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.3);
-              if (type === 'pop') o.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.1);
-              if (type === 'honk') o.frequency.setValueAtTime(250, ctx.currentTime + 0.05);
-              g.gain.setValueAtTime(0.15, ctx.currentTime);
-              g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-              o.start(); o.stop(ctx.currentTime + 0.5);
-            } catch (e) { }
-          }
+    // ===== WORK HOVER SOUND (Web Audio API でポップ音を生成) =====
+    function makeBeep(type) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        const freq = type === 'boing' ? 200 : type === 'pop' ? 600 : 300;
+        o.frequency.setValueAtTime(freq, ctx.currentTime);
+        if (type === 'boing') o.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.3);
+        if (type === 'pop') o.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.1);
+        if (type === 'honk') o.frequency.setValueAtTime(250, ctx.currentTime + 0.05);
+        g.gain.setValueAtTime(0.15, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+        o.start(); o.stop(ctx.currentTime + 0.5);
+      } catch (e) { }
+    }
 
-          document.querySelectorAll('.work-card').forEach(card => {
-            card.addEventListener('mouseenter', () => makeBeep(card.dataset.sound));
-          });
+    document.querySelectorAll('.work-card').forEach(card => {
+      card.addEventListener('mouseenter', () => makeBeep(card.dataset.sound));
+    });
 
-          function playWorkSound(card) {
-            card.classList.remove('shake');
-            void card.offsetWidth; // アニメーションのリセット用
-            card.classList.add('shake');
+    function playWorkSound(card) {
+      card.classList.remove('shake');
+      void card.offsetWidth; // アニメーションのリセット用
+      card.classList.add('shake');
 
-            // 指定したサウンドを再生
-            const workSound = new Audio('sounds/2.mp3');
-            workSound.currentTime = 0; // 連続クリックでも最初から再生
-            workSound.play();
+      // 指定したサウンドを再生
+      const workSound = new Audio('sounds/2.mp3');
+      workSound.currentTime = 0; // 連続クリックでも最初から再生
+      workSound.play();
+      // 2. モーダルにデータをセットして表示
+      const modal = document.getElementById('work-modal');
+      const title = document.getElementById('modal-title');
+      const desc = document.getElementById('modal-description');
+      const imgContainer = document.getElementById('modal-image-wire');
 
-            // 既存のWeb Audio（ビープ音）も残したければそのままでOK
-            //makeBeep(card.dataset.sound);
-          }
+      title.textContent = card.dataset.title;
+      desc.textContent = card.dataset.desc;
 
-          // ===== PHOTO CYCLE =====
-          // ===== PHOTO CYCLE (ランダム表示版) =====
-          const profileImages = [
-            '/Users/pastamac/Desktop/MY HP/profiles/profile_1.jpg',
-            '/Users/pastamac/Desktop/MY HP/profiles/profile_2.jpg',
-            '/Users/pastamac/Desktop/MY HP/profiles/profile_3.jpg',
-            '/Users/pastamac/Desktop/MY HP/profiles/profile_4.jpg',
-            '/Users/pastamac/Desktop/MY HP/profiles/profile_5.jpg',
-            '/Users/pastamac/Desktop/MY HP/profiles/profile_6.jpg',
-            '/Users/pastamac/Desktop/MY HP/profiles/profile_7.jpg',
-            '/Users/pastamac/Desktop/MY HP/profiles/profile_8.jpg',
-            '/Users/pastamac/Desktop/MY HP/profiles/profile_9.jpg',
-            '/Users/pastamac/Desktop/MY HP/profiles/profile_10.jpg'
-          ];
+      // カード内の画像を取得してモーダルにも表示
+      const cardImg = card.querySelector('img');
+      if (cardImg) {
+        imgContainer.innerHTML = `<img src="${cardImg.src}" style="width:100%; height:100%; object-fit:contain;">`;
+      }
 
-          function cyclePhoto() {
-            const imgElement = document.getElementById('profileImg');
+      modal.classList.add('show');
+    }
 
-            // 10枚の中からランダムに選ぶ
-            const randomIndex = Math.floor(Math.random() * profileImages.length);
+    // モーダルを閉じる関数
+    function closeModal(event) {
+      document.getElementById('work-modal').classList.remove('show');
+      makeBeep('pop'); // 閉じる時も「ポッ」と鳴らすとかわいい
+    }
+    // 既存のWeb Audio（ビープ音）も残したければそのままでOK
+    //makeBeep(card.dataset.sound);
 
-            // 画像を切り替え
-            imgElement.src = profileImages[randomIndex];
+    // ===== PHOTO CYCLE (ランダム表示版) =====
+    const profileImages = [
+      '/Users/pastamac/Desktop/MY HP/profiles/profile_1.jpg',
+      '/Users/pastamac/Desktop/MY HP/profiles/profile_2.jpg',
+      '/Users/pastamac/Desktop/MY HP/profiles/profile_3.jpg',
+      '/Users/pastamac/Desktop/MY HP/profiles/profile_4.jpg',
+      '/Users/pastamac/Desktop/MY HP/profiles/profile_5.jpg',
+      '/Users/pastamac/Desktop/MY HP/profiles/profile_6.jpg',
+      '/Users/pastamac/Desktop/MY HP/profiles/profile_7.jpg',
+      '/Users/pastamac/Desktop/MY HP/profiles/profile_8.jpg',
+      '/Users/pastamac/Desktop/MY HP/profiles/profile_9.jpg',
+      '/Users/pastamac/Desktop/MY HP/profiles/profile_10.jpg'
+    ];
 
-            // 音を鳴らす
-            makeBeep('pop');
-          }
+    function cyclePhoto() {
+      const imgElement = document.getElementById('profileImg');
 
-          // ===== RANDOM BIO =====
-          const bios = [
-            ['ここに自己紹介が入ります。', '変なものを描くのが好きです。'],
-            ['血液型：謎。', '好きな食べ物：もう忘れた。'],
-            ['本業は人間です。', '副業でイラストを描いています。'],
-            ['右も左もわからないまま', 'なんとなく生きています。'],
-            ['モットーは「とりあえず描く」。', '深く考えると手が止まる。'],
-            ['好きなもの：変なもの全般。', '嫌いなもの：白紙。'],
-          ];
-          let bioIdx = 0;
-          const bioClickable = document.getElementById('bioClickable');
-          function changeBio() {
-            bioIdx = (bioIdx + 1) % bios.length;
-            const b = bios[bioIdx];
-            bioClickable.previousSibling && null;
-            const p = document.getElementById('bioText');
-            p.innerHTML = b[0] + '<br>' + b[1] + '<br><span class="bio-clickable" id="bioClickable" onclick="changeBio()">【もう一回】</span>';
-            makeBeep('boing');
-          }
+      // 10枚の中からランダムに選ぶ
+      const randomIndex = Math.floor(Math.random() * profileImages.length);
 
-          // ===== SUBMIT =====
-          function handleSubmit(e) {
-            e.preventDefault();
-            // ここに「ありがとうございました」音声を入れる
-            // const thx = new Audio('arigatou.mp3'); thx.play();
-            const btn = e.target;
-            const orig = btn.textContent;
-            btn.textContent = '✓ ありがとうございました！';
-            btn.style.background = 'var(--orange)';
-            btn.style.color = 'var(--bg)';
-            makeBeep('pop');
-            setTimeout(() => {
-              btn.textContent = orig;
-              btn.style.background = '';
-              btn.style.color = '';
-            }, 3000);
-          }
+      // 画像を切り替え
+      imgElement.src = profileImages[randomIndex];
 
-          // ===== SCROLL REVEAL =====
-          const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-          }, { threshold: 0.15 });
+      // 音を鳴らす
+      makeBeep('pop');
+    }
 
-          document.querySelectorAll('.reveal, .reveal-group').forEach(el => observer.observe(el));
-        </script>
+    // ===== RANDOM BIO =====
+    const bios = [
+      ['ここに自己紹介が入ります。', '変なものを描くのが好きです。'],
+      ['血液型：謎。', '好きな食べ物：もう忘れた。'],
+      ['本業は人間です。', '副業でイラストを描いています。'],
+      ['右も左もわからないまま', 'なんとなく生きています。'],
+      ['モットーは「とりあえず描く」。', '深く考えると手が止まる。'],
+      ['好きなもの：変なもの全般。', '嫌いなもの：白紙。'],
+    ];
+    let bioIdx = 0;
+    const bioClickable = document.getElementById('bioClickable');
+    function changeBio() {
+      bioIdx = (bioIdx + 1) % bios.length;
+      const b = bios[bioIdx];
+      bioClickable.previousSibling && null;
+      const p = document.getElementById('bioText');
+      p.innerHTML = b[0] + '<br>' + b[1] + '<br><span class="bio-clickable" id="bioClickable" onclick="changeBio()">【もう一回】</span>';
+      makeBeep('boing');
+    }
+
+    // ===== SUBMIT (Formspree連携版) =====
+    async function handleSubmit(e) {
+      e.preventDefault(); // 画面遷移を止める
+
+      const btn = e.target;
+      const form = document.getElementById('contactForm');
+      const formData = new FormData(form);
+      const origText = btn.textContent;
+
+      // 送信中の表示
+      btn.textContent = '送信中...';
+      btn.style.pointerEvents = 'none';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          // 送信成功！
+          btn.textContent = '✓ ありがとうございました！';
+          btn.style.background = 'var(--orange)';
+          btn.style.color = 'var(--bg)';
+          if (typeof makeBeep === 'function') makeBeep('pop');
+          form.reset(); // 入力欄を空にする
+        } else {
+          // Formspree側からのエラー回答
+          const errorData = await response.json();
+          btn.textContent = '送信失敗：' + (errorData.error || 'エラー');
+        }
+      } catch (error) {
+        // ネットワークエラーなど
+        btn.textContent = '接続エラーが発生しました';
+      }
+
+      // 4秒後にボタンの状態を戻す
+      setTimeout(() => {
+        btn.textContent = origText;
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.style.pointerEvents = 'all';
+      }, 4000);
+    }
+
+    // ===== SCROLL REVEAL =====
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal, .reveal-group').forEach(el => observer.observe(el));
+  </script>
+
+  <div id="work-modal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal(event)">×</button>
+      <div id="modal-image-wire"></div>
+      <h2 id="modal-title">TITLE</h2>
+      <div class="divider"></div>
+      <p id="modal-description">説明文がここに入ります。</p>
+    </div>
+  </div>
 </body>
 
 </html>
