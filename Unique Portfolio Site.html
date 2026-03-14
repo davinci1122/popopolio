@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MY PORTFOLIO</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kiwi+Maru:wght@300;400;500&family=Dela+Gothic+One&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --orange: #D4612A;
+      --orange-bright: #E8732E;
+      --orange-dark: #A84820;
+      --cream: #F2E8D5;
+      --yellow: #C9A84C;
+      --brown: #3D2010;
+      --brown-mid: #7A4020;
+      --bg: #1A0E06;
+      --text-light: #F2E8D5;
+      --text-muted: #A07050;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Kiwi Maru', serif;
+      background: var(--bg);
+      color: var(--text-light);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ===== CUSTOM CURSOR ===== */
+    #cursor {
+      position: fixed;
+      width: 36px;
+      height: 36px;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.05s;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    /* ===== NOISE TEXTURE OVERLAY ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.4;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(26, 14, 6, 0.95), transparent);
+    }
+
+    .nav-logo {
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: 1.4rem;
+      color: var(--orange);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--orange);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--orange);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      min-height: 100vh;
+      padding: 100px 60px 80px;
+      position: relative;
+    }
+
+    /* ===== TOP / HERO ===== */
+    #top {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      top: 50%;
+      left: -10px;
+      transform: translateY(-50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(120px, 22vw, 300px);
+      color: var(--brown);
+      opacity: 0.25;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+      line-height: 0.85;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-tag {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.3em;
+      color: var(--orange);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 30px;
+      height: 2px;
+      background: var(--orange);
+    }
+
+    .hero-title {
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: clamp(48px, 9vw, 120px);
+      line-height: 0.95;
+      color: var(--cream);
+      margin-bottom: 24px;
+    }
+
+    .hero-title span {
+      color: var(--orange);
+      display: block;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 400px;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .laugh-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--orange);
+      color: var(--bg);
+      padding: 16px 32px;
+      border: none;
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      cursor: none;
+      transition: background 0.2s, transform 0.1s;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+
+    .laugh-btn:hover {
+      background: var(--orange-bright);
+      transform: scale(1.03);
+    }
+
+    /* laugh overlay */
+    #laugh-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--orange);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: clamp(40px, 10vw, 100px);
+      color: var(--bg);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      text-align: center;
+      padding: 40px;
+    }
+
+    #laugh-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ===== WORKS ===== */
+    #works {
+      background: linear-gradient(to bottom, var(--bg), #200F04);
+    }
+
+    .section-header {
+      margin-bottom: 60px;
+    }
+
+    .section-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.4em;
+      color: var(--orange);
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: clamp(36px, 6vw, 80px);
+      color: var(--cream);
+      line-height: 1;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .work-card {
+      position: relative;
+      background: var(--brown);
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      cursor: none;
+      transition: transform 0.3s;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    }
+
+    .work-card:hover {
+      transform: translateY(-6px) rotate(0.5deg);
+    }
+
+    .work-card-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      background: linear-gradient(135deg, var(--brown-mid), var(--brown));
+      transition: filter 0.3s;
+    }
+
+    .work-card:hover .work-card-inner {
+      filter: brightness(1.15);
+    }
+
+    .work-card-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(26, 14, 6, 0.95), transparent);
+      padding: 20px 16px 14px;
+      font-size: 0.85rem;
+      color: var(--cream);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .work-card:hover .work-card-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .work-card-label strong {
+      display: block;
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: 1rem;
+      color: var(--orange);
+      margin-bottom: 2px;
+    }
+
+    /* ===== ABOUT ===== */
+    #about {
+      background: #200F04;
+      display: flex;
+      align-items: center;
+    }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 80px;
+      align-items: start;
+      width: 100%;
+    }
+
+    .about-photo-wrap {
+      position: relative;
+    }
+
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--brown);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      cursor: none;
+      position: relative;
+      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+      transition: transform 0.3s;
+      overflow: hidden;
+    }
+
+    .about-photo:hover {
+      transform: rotate(-1deg) scale(1.02);
+    }
+
+    .photo-layer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      transition: opacity 0.4s, transform 0.4s;
+      background: linear-gradient(135deg, var(--brown-mid), var(--brown));
+    }
+
+    .photo-hint {
+      position: absolute;
+      bottom: -28px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .about-right {
+      padding-top: 20px;
+    }
+
+    .about-bio {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+      min-height: 120px;
+      cursor: none;
+    }
+
+    .bio-clickable {
+      color: var(--cream);
+      border-bottom: 1px dashed var(--orange);
+      padding-bottom: 2px;
+    }
+
+    .bio-hint {
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 0.15em;
+      margin-top: 12px;
+      opacity: 0.7;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill-tag {
+      background: transparent;
+      border: 1px solid var(--brown-mid);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+    }
+
+    /* ===== CONTACT ===== */
+    #contact {
+      background: linear-gradient(to bottom, #200F04, var(--bg));
+    }
+
+    .contact-layout {
+      max-width: 600px;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      color: var(--orange);
+    }
+
+    .form-input,
+    .form-textarea {
+      background: var(--brown);
+      border: 1px solid var(--brown-mid);
+      border-bottom: 2px solid var(--orange-dark);
+      color: var(--cream);
+      padding: 14px 16px;
+      font-family: 'Kiwi Maru', serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+      cursor: none;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--orange);
+    }
+
+    .form-textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      align-self: flex-start;
+      background: transparent;
+      border: 2px solid var(--orange);
+      color: var(--orange);
+      padding: 16px 40px;
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      cursor: none;
+      transition: background 0.2s, color 0.2s, transform 0.1s;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    }
+
+    .submit-btn:hover {
+      background: var(--orange);
+      color: var(--bg);
+      transform: scale(1.02);
+    }
+
+    .contact-sns {
+      margin-top: 60px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .sns-link {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .sns-link:hover {
+      color: var(--orange);
+      border-color: var(--orange);
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: var(--orange);
+      margin: 16px 0 40px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg);
+      padding: 30px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--brown);
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-tag {
+      animation: fadeInUp 0.6s ease 0.2s both;
+    }
+
+    .hero-title {
+      animation: fadeInUp 0.6s ease 0.35s both;
+    }
+
+    .hero-desc {
+      animation: fadeInUp 0.6s ease 0.5s both;
+    }
+
+    .laugh-btn {
+      animation: fadeInUp 0.6s ease 0.65s both;
+    }
+
+    /* shake animation */
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      20% {
+        transform: translateX(-8px) rotate(-2deg);
+      }
+
+      40% {
+        transform: translateX(8px) rotate(2deg);
+      }
+
+      60% {
+        transform: translateX(-5px) rotate(-1deg);
+      }
+
+      80% {
+        transform: translateX(5px) rotate(1deg);
+      }
+    }
+
+    .shake {
+      animation: shake 0.5s ease;
+    }
+
+    /* scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* stagger children */
+    .reveal-group>* {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal-group.visible>*:nth-child(1) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.0s;
+    }
+
+    .reveal-group.visible>*:nth-child(2) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.1s;
+    }
+
+    .reveal-group.visible>*:nth-child(3) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.2s;
+    }
+
+    .reveal-group.visible>*:nth-child(4) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.3s;
+    }
+
+    .reveal-group.visible>*:nth-child(5) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.4s;
+    }
+
+    .reveal-group.visible>*:nth-child(6) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.5s;
+    }
+
+    /* 激しい揺れの定義 */
+    @keyframes mega-shake {
+      0% {
+        transform: translateY(-50%) translate(0, 0) rotate(0deg);
+      }
+
+      10% {
+        transform: translateY(-50%) translate(-20px, -10px) rotate(-5deg);
+      }
+
+      20% {
+        transform: translateY(-50%) translate(20px, 10px) rotate(5deg);
+      }
+
+      30% {
+        transform: translateY(-50%) translate(-20px, 10px) rotate(-3deg);
+      }
+
+      40% {
+        transform: translateY(-50%) translate(20px, -10px) rotate(3deg);
+      }
+
+      50% {
+        transform: translateY(-50%) translate(-10px, 10px) rotate(-1deg);
+      }
+
+      60% {
+        transform: translateY(-50%) translate(10px, -10px) rotate(1deg);
+      }
+
+      70% {
+        transform: translateY(-50%) translate(-20px, 10px) rotate(-5deg);
+      }
+
+      80% {
+        transform: translateY(-50%) translate(20px, -10px) rotate(5deg);
+      }
+
+      90% {
+        transform: translateY(-50%) translate(-10px, -10px) rotate(-2deg);
+      }
+
+      100% {
+        transform: translateY(-50%) translate(0, 0) rotate(0deg);
+      }
+    }
+
+    /* 揺れを適用するクラス */
+    .shaking-text {
+      animation: mega-shake 0.15s infinite;
+      /* 0.15秒周期でループ */
+      color: var(--orange) !important;
+      /* 揺れている間だけ色を変えるとさらに目立ちます */
+      opacity: 0.8 !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- CURSOR -->
+  <div id="cursor">🥚</div>
+
+  <!-- LAUGH OVERLAY (shown on page load) -->
+  <div id="laugh-overlay">
+    ＼ようこそ！／<br>
+    <span
+      style="font-size:0.45em; margin-top:16px; display:block; color: rgba(26,14,6,0.6);">音量注意だよ。いうよりも先にまず鳴るけどね。</span>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#top">DAICHI TEZUKA</a>
+    <ul class="nav-links">
+      <li><a href="#works">WORKS</a></li>
+      <li><a href="#about">ABOUT</a></li>
+      <li><a href="#contact">CONTACT</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== TOP ===== -->
+  <section id="top">
+    <div class="hero-bg-text">HA<br>HA<br>HA</div>
+    <div class="hero-content">
+      <div class="hero-tag"> & PROTOTYPER</div>
+      <h1 class="hero-title">
+        Useful<br>
+        <span>Buster.</span>
+      </h1>
+      <p class="hero-desc">
+        こんなのがあったらな<br>
+        そういう感じ。<br>
+        とりいそぎ、作ってみてます。
+      </p>
+      <button class="laugh-btn" onclick="playLaugh()">
+        🎤 笑い声が気になる方向けのボタン
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== WORKS ===== -->
+  <section id="works">
+    <div class="section-header reveal">
+      <div class="section-num">01 — WORKS</div>
+      <h2 class="section-title">PROTOTYPING</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="works-grid reveal-group">
+      <div class="work-card" data-sound="boing" onclick="playWorkSound(this)">
+        <div class="work-card-inner">
+          <img src="WORKS/work_1.jpg" alt="Work 01" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="work-card-label">
+          <strong>作品タイトル 01</strong>
+          2024 / デジタル
+        </div>
+      </div>
+      <div class="work-card" data-sound="pop" onclick="playWorkSound(this)">
+        <div class="work-card-inner">
+          <img src="/Users/pastamac/Desktop/MY HP/WORKS/work_1.jpg" alt="Work 01"
+            style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="work-card-label">
+          <strong>作品タイトル 02</strong>
+          2024 / アナログ
+        </div>
+      </div>
+      <div class="work-card" data-sound="honk" onclick="playWorkSound(this)">
+        <div class="work-card-inner">
+          <img src="/Users/pastamac/Desktop/MY HP/WORKS/work_1.jpg" alt="Work 01"
+            style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="work-card-label">
+          <strong>作品タイトル 03</strong>
+          2023 / 混合
+        </div>
+      </div>
+      <div class="work-card" data-sound="boing" onclick="playWorkSound(this)">
+        <div class="work-card-inner">
+          <img src="/Users/pastamac/Desktop/MY HP/WORKS/work_1.jpg" alt="Work 01"
+            style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="work-card-label">
+          <strong>作品タイトル 04</strong>
+          2023 / デジタル
+        </div>
+      </div>
+      <div class="work-card" data-sound="pop" onclick="playWorkSound(this)">
+        <div class="work-card-inner">
+          <img src="/Users/pastamac/Desktop/MY HP/WORKS/work_1.jpg" alt="Work 01"
+            style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="work-card-label">
+          <strong>作品タイトル 05</strong>
+          2023 / アナログ
+        </div>
+      </div>
+      <div class="work-card" data-sound="honk" onclick="playWorkSound(this)">
+        <div class="work-card-inner">
+          <img src="/Users/pastamac/Desktop/MY HP/WORKS/work_1.jpg" alt="Work 01"
+            style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="work-card-label">
+          <strong>作品タイトル 06</strong>
+          2022 / デジタル
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
+    <div class="about-layout">
+      <div class="about-photo-wrap reveal">
+        <div class="about-photo" id="photoBox" onclick="cyclePhoto()">
+          <img id="profileImg" src="profiles/profile_1.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+      </div>
+
+      <div class="about-right">
+        <div class="section-num reveal">02 — ABOUT</div>
+        <h2 class="section-title reveal">自己紹介ガチャ</h2>
+        <div class="divider reveal"></div>
+
+        <p class="about-bio reveal" id="bioText">
+          一回のクリックに100円もらえたらなぁ<br>
+          <span class="bio-clickable" id="bioClickable" onclick="changeBio()">【クリックしてガチャを引く】</span>
+        </p>
+        <p class="bio-hint reveal">↓SKILLS</p>
+
+        <div class="skills-list reveal-group">
+          <span class="skill-tag">電子工作</span>
+          <span class="skill-tag">カードゲームスキル</span>
+          <span class="skill-tag">ツッコミ</span>
+          <span class="skill-tag">ガヤ</span>
+          <span class="skill-tag">野球</span>
+          <span class="skill-tag">バスケ</span>
+          <span class="skill-tag">テニス</span>
+          <span class="skill-tag">グルーガンの申し子</span>
+          <span class="skill-tag">誠実</span>
+          <span class="skill-tag">ファシリ</span>
+          <span class="skill-tag">Tシャツ作り</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact">
+    <div class="contact-layout">
+      <div class="section-num reveal">03 — CONTACT</div>
+      <h2 class="section-title reveal">感想大歓迎です。</h2>
+      <div class="divider reveal"></div>
+
+      <div class="contact-form reveal">
+        <div class="form-group">
+          <label class="form-label">NAME</label>
+          <input class="form-input" type="text" placeholder="お名前（ニックネーム可）">
+        </div>
+        <div class="form-group">
+          <label class="form-label">EMAIL</label>
+          <input class="form-input" type="email" placeholder="メル友になりましょう">
+        </div>
+        <div class="form-group">
+          <label class="form-label">メッセージ</label>
+          <textarea class="form-textarea" placeholder="なんでも歓迎団"></textarea>
+        </div>
+        <button class="submit-btn" onclick="handleSubmit(event)">送信する</button>
+      </div>
+
+      <div class="contact-sns">
+        <a class="sns-link" href="#">TWITTER / X</a>
+        <a class="sns-link" href="#">INSTAGRAM</a>
+        <a class="sns-link" href="#">PORTFOLIO SITE VERSION 1.0</a>
+
+
+        <script>
+          // ===== CURSOR =====
+          const cursor = document.getElementById('cursor');
+          document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+          });
+
+          // ===== LAUGH ON LOAD =====
+          const overlay = document.getElementById('laugh-overlay');
+          window.addEventListener('load', () => {
+            overlay.classList.add('show');
+
+            // ここを書き換え：音声を読み込んで再生
+            const laugh = new Audio('laughs/laugh_1.mp3');
+            laugh.play().catch(e => console.log("Autoplay blocked: クリックされるまで再生されません"));
+
+            setTimeout(() => {
+              overlay.style.transition = 'opacity 0.8s';
+              overlay.classList.remove('show');
+              setTimeout(() => overlay.style.pointerEvents = 'none', 800);
+            }, 2000);
+          });
+
+          function playLaugh() {
+            overlay.classList.add('show');
+
+            // ここを書き換え：ボタンを押した時も同じ音を鳴らす
+            const laugh = new Audio('laughs/laugh_1.mp3');
+            laugh.play();
+
+            setTimeout(() => {
+              overlay.classList.remove('show');
+            }, 1500);
+          }
+
+          // ===== WORK HOVER SOUND (Web Audio API でポップ音を生成) =====
+          function makeBeep(type) {
+            try {
+              const ctx = new (window.AudioContext || window.webkitAudioContext)();
+              const o = ctx.createOscillator();
+              const g = ctx.createGain();
+              o.connect(g); g.connect(ctx.destination);
+              const freq = type === 'boing' ? 200 : type === 'pop' ? 600 : 300;
+              o.frequency.setValueAtTime(freq, ctx.currentTime);
+              if (type === 'boing') o.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.3);
+              if (type === 'pop') o.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.1);
+              if (type === 'honk') o.frequency.setValueAtTime(250, ctx.currentTime + 0.05);
+              g.gain.setValueAtTime(0.15, ctx.currentTime);
+              g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+              o.start(); o.stop(ctx.currentTime + 0.5);
+            } catch (e) { }
+          }
+
+          document.querySelectorAll('.work-card').forEach(card => {
+            card.addEventListener('mouseenter', () => makeBeep(card.dataset.sound));
+          });
+
+          function playWorkSound(card) {
+            card.classList.remove('shake');
+            void card.offsetWidth; // アニメーションのリセット用
+            card.classList.add('shake');
+
+            // 指定したサウンドを再生
+            const workSound = new Audio('sounds/2.mp3');
+            workSound.currentTime = 0; // 連続クリックでも最初から再生
+            workSound.play();
+
+            // 既存のWeb Audio（ビープ音）も残したければそのままでOK
+            //makeBeep(card.dataset.sound);
+          }
+
+          // ===== PHOTO CYCLE =====
+          // ===== PHOTO CYCLE (ランダム表示版) =====
+          const profileImages = [
+            '/Users/pastamac/Desktop/MY HP/profiles/profile_1.jpg',
+            '/Users/pastamac/Desktop/MY HP/profiles/profile_2.jpg',
+            '/Users/pastamac/Desktop/MY HP/profiles/profile_3.jpg',
+            '/Users/pastamac/Desktop/MY HP/profiles/profile_4.jpg',
+            '/Users/pastamac/Desktop/MY HP/profiles/profile_5.jpg',
+            '/Users/pastamac/Desktop/MY HP/profiles/profile_6.jpg',
+            '/Users/pastamac/Desktop/MY HP/profiles/profile_7.jpg',
+            '/Users/pastamac/Desktop/MY HP/profiles/profile_8.jpg',
+            '/Users/pastamac/Desktop/MY HP/profiles/profile_9.jpg',
+            '/Users/pastamac/Desktop/MY HP/profiles/profile_10.jpg'
+          ];
+
+          function cyclePhoto() {
+            const imgElement = document.getElementById('profileImg');
+
+            // 10枚の中からランダムに選ぶ
+            const randomIndex = Math.floor(Math.random() * profileImages.length);
+
+            // 画像を切り替え
+            imgElement.src = profileImages[randomIndex];
+
+            // 音を鳴らす
+            makeBeep('pop');
+          }
+
+          // ===== RANDOM BIO =====
+          const bios = [
+            ['ここに自己紹介が入ります。', '変なものを描くのが好きです。'],
+            ['血液型：謎。', '好きな食べ物：もう忘れた。'],
+            ['本業は人間です。', '副業でイラストを描いています。'],
+            ['右も左もわからないまま', 'なんとなく生きています。'],
+            ['モットーは「とりあえず描く」。', '深く考えると手が止まる。'],
+            ['好きなもの：変なもの全般。', '嫌いなもの：白紙。'],
+          ];
+          let bioIdx = 0;
+          const bioClickable = document.getElementById('bioClickable');
+          function changeBio() {
+            bioIdx = (bioIdx + 1) % bios.length;
+            const b = bios[bioIdx];
+            bioClickable.previousSibling && null;
+            const p = document.getElementById('bioText');
+            p.innerHTML = b[0] + '<br>' + b[1] + '<br><span class="bio-clickable" id="bioClickable" onclick="changeBio()">【もう一回】</span>';
+            makeBeep('boing');
+          }
+
+          // ===== SUBMIT =====
+          function handleSubmit(e) {
+            e.preventDefault();
+            // ここに「ありがとうございました」音声を入れる
+            // const thx = new Audio('arigatou.mp3'); thx.play();
+            const btn = e.target;
+            const orig = btn.textContent;
+            btn.textContent = '✓ ありがとうございました！';
+            btn.style.background = 'var(--orange)';
+            btn.style.color = 'var(--bg)';
+            makeBeep('pop');
+            setTimeout(() => {
+              btn.textContent = orig;
+              btn.style.background = '';
+              btn.style.color = '';
+            }, 3000);
+          }
+
+          // ===== SCROLL REVEAL =====
+          const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+          }, { threshold: 0.15 });
+
+          document.querySelectorAll('.reveal, .reveal-group').forEach(el => observer.observe(el));
+        </script>
+</body>
+
+</html>
