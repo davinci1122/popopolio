@@ -10,16 +10,45 @@
     rel="stylesheet">
   <style>
     :root {
-      --orange: #D4612A;
-      --orange-bright: #E8732E;
-      --orange-dark: #A84820;
-      --cream: #F2E8D5;
-      --yellow: #C9A84C;
-      --brown: #3D2010;
-      --brown-mid: #7A4020;
-      --bg: #1A0E06;
-      --text-light: #F2E8D5;
-      --text-muted: #A07050;
+      /* ===== 明るい新配色パレット ===== */
+      --orange: #E05C1A;
+      /* メインアクセント：鮮やかなテラコッタ */
+      --orange-bright: #F07030;
+      /* ホバー時のより明るいオレンジ */
+      --orange-dark: #B84010;
+      /* 影・ボーダー用の濃いめオレンジ */
+      --orange-light: #FFD4A8;
+      /* 薄いアクセント（バッジ背景など） */
+
+      --cream: #FFF8EE;
+      /* 明るいクリーム（旧 #F2E8D5 より白寄り） */
+      --cream-mid: #F5EAD6;
+      /* セクション背景のやや濃いクリーム */
+      --yellow: #E8B84B;
+      /* 黄みがかったアクセント */
+
+      --brown: #7A3A10;
+      /* 旧ダークブラウン → 中間に明るく */
+      --brown-mid: #C07840;
+      /* 中間ブラウン → もっとウォームに */
+      --brown-light: #E8C090;
+      /* 薄いブラウン（ボーダー等） */
+
+      --bg: #FFF8EE;
+      /* ページ背景：明るいクリーム */
+      --bg-warm: #FFF0D8;
+      /* やや濃い背景（セクション切り替え用） */
+      --bg-section: #FDE8C8;
+      /* さらにトーンを落としたセクション背景 */
+
+      --text-dark: #2A1206;
+      /* メイン文字色：濃い茶（旧 --cream が文字だったのを反転） */
+      --text-mid: #6B3A18;
+      /* 副文字色：中間ブラウン */
+      --text-muted: #A06030;
+      /* ミュート文字：ウォームブラウン */
+      /* :root の末尾に追加 */
+      --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.12'/%3E%3C/svg%3E");
     }
 
     * {
@@ -31,7 +60,7 @@
     body {
       font-family: 'Kiwi Maru', serif;
       background: var(--bg);
-      color: var(--text-light);
+      color: var(--text-dark);
       overflow-x: hidden;
       cursor: none;
     }
@@ -54,10 +83,10 @@
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.18'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 9998;
-      opacity: 0.4;
+      opacity: 0.5;
     }
 
     /* ===== NAV ===== */
@@ -70,7 +99,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(to bottom, rgba(26, 14, 6, 0.95), transparent);
+      background: linear-gradient(to bottom, rgba(255, 248, 238, 0.97), transparent);
     }
 
     .nav-logo {
@@ -90,7 +119,7 @@
     .nav-links a {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.1rem;
-      color: var(--cream);
+      color: var(--text-mid);
       text-decoration: none;
       letter-spacing: 0.15em;
       transition: color 0.2s;
@@ -121,6 +150,9 @@
       min-height: 100vh;
       padding: 100px 60px 80px;
       position: relative;
+      background-image: var(--grain);
+      background-repeat: repeat;
+      background-size: 300px 300px;
     }
 
     /* ===== TOP / HERO ===== */
@@ -140,8 +172,8 @@
       transform: translateY(-50%);
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(120px, 22vw, 300px);
-      color: var(--brown);
-      opacity: 0.25;
+      color: var(--brown-light);
+      opacity: 0.45;
       letter-spacing: -0.02em;
       white-space: nowrap;
       user-select: none;
@@ -176,11 +208,9 @@
     .hero-title {
       font-family: 'Dela Gothic One', sans-serif;
       font-size: clamp(48px, 9vw, 120px);
-      /* 行間を1.1程度に。これ以上狭いとまた潰れます */
       line-height: 1 !important;
-      color: var(--cream);
+      color: var(--text-dark);
       margin-bottom: 24px;
-      /* 物理解除 */
       transform: none !important;
       display: block !important;
       height: auto !important;
@@ -189,13 +219,12 @@
     .hero-title span {
       color: var(--orange);
       display: block;
-      /* ここがポイント：マイナスのマージンで「Buster.」を上に引き寄せます */
       margin-top: -0.5em;
     }
 
     .hero-desc {
       font-size: 1rem;
-      color: var(--text-muted);
+      color: var(--text-mid);
       max-width: 400px;
       line-height: 1.8;
       margin-bottom: 40px;
@@ -206,7 +235,7 @@
       align-items: center;
       gap: 12px;
       background: var(--orange);
-      color: var(--bg);
+      color: var(--cream);
       padding: 16px 32px;
       border: none;
       font-family: 'Dela Gothic One', sans-serif;
@@ -233,7 +262,7 @@
       justify-content: center;
       font-family: 'Dela Gothic One', sans-serif;
       font-size: clamp(40px, 10vw, 100px);
-      color: var(--bg);
+      color: var(--cream);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s;
@@ -248,7 +277,7 @@
 
     /* ===== WORKS ===== */
     #works {
-      background: linear-gradient(to bottom, var(--bg), #200F04);
+      background: linear-gradient(to bottom, var(--bg), var(--bg-warm));
     }
 
     .section-header {
@@ -263,17 +292,11 @@
       margin-bottom: 8px;
     }
 
-    /* 自己紹介ガチャやWORKSのタイトル部分 */
     .section-title {
       font-family: 'Dela Gothic One', sans-serif;
       font-size: clamp(30px, 6vw, 80px);
-      color: var(--cream);
-
-      /* ↓ここがポイント：1.2〜1.3くらいに広げると潰れが解消されます */
+      color: var(--text-dark);
       line-height: 1 !important;
-
-      /* ↓文字が横に詰まりすぎている場合はこれも追加 */
-      /*letter-spacing: 0.02em; */
     }
 
     .works-grid {
@@ -282,44 +305,40 @@
       gap: 24px;
     }
 
-    /* ===== WORKS関連の修正（画像サイズとテキストを整える） ===== */
     .work-card {
       position: relative;
-      background: var(--brown);
+      background: var(--bg-section);
       aspect-ratio: 4/3;
-      /* これでカードの形を固定します */
       overflow: hidden;
       cursor: none;
       clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+      /* 旧ダーク背景からクリームベースに */
+      border: 1px solid var(--brown-light);
     }
 
     .work-card-inner {
       width: 100%;
       height: 100%;
       display: block;
-      /* 横並びを防ぐため block に変更 */
-      /* ★重要：以前の font-size: 4rem; は必ず消してください */
     }
 
     .work-card-inner img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      /* 画像を枠いっぱいに、かつ歪ませずに表示 */
       display: block;
     }
 
-    /* ラベル（文字部分）を画像の上に重ねる設定 */
     .work-card-label {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(to top, rgba(26, 14, 6, 0.95), transparent);
+      /* 旧:rgba(26,14,6,0.95)の暗い → 明るいクリームのグラデに */
+      background: linear-gradient(to top, rgba(255, 240, 216, 0.97), transparent);
       padding: 20px 16px;
-      /* ★重要：フォントサイズを普通の大きさに固定 */
       font-size: 0.85rem !important;
-      color: var(--cream);
+      color: var(--text-mid);
       pointer-events: none;
       opacity: 0;
       transform: translateY(10px);
@@ -335,7 +354,6 @@
       display: block;
       font-family: 'Dela Gothic One', sans-serif;
       font-size: 1rem !important;
-      /* 作品名も適切なサイズに */
       color: var(--orange);
       margin-bottom: 2px;
     }
@@ -343,28 +361,18 @@
     .section-title,
     .hero-title {
       font-family: 'Dela Gothic One', sans-serif;
-
-      /* 1. 縦横比を強制リセット（どこかで scaleY がかかっているのを防ぐ） */
       transform: none !important;
       display: block !important;
       height: auto !important;
-
-      /* 2. 行間を「文字の高さ＋余白」分しっかり取る（潰れ感の解消） */
       line-height: 1.5 !important;
-
-      /* 3. 文字同士がめり込まないように少し隙間を作る */
       letter-spacing: 0.05em !important;
-
-      /* 4. 上下に少し余白（パディング）を作って、文字を呼吸させる */
       padding: 10px 0 !important;
-
-      /* 5. 念のためフォントの太さをリセット（このフォントは太さ固定です） */
       font-weight: 400 !important;
     }
 
     /* ===== ABOUT ===== */
     #about {
-      background: #200F04;
+      background: var(--bg-warm);
       display: flex;
       align-items: center;
     }
@@ -384,7 +392,7 @@
     .about-photo {
       width: 100%;
       aspect-ratio: 3/4;
-      background: var(--brown);
+      background: var(--bg-section);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -394,6 +402,7 @@
       clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
       transition: transform 0.3s;
       overflow: hidden;
+      border: 1px solid var(--brown-light);
     }
 
     .about-photo:hover {
@@ -408,7 +417,7 @@
       justify-content: center;
       font-size: 5rem;
       transition: opacity 0.4s, transform 0.4s;
-      background: linear-gradient(135deg, var(--brown-mid), var(--brown));
+      background: linear-gradient(135deg, var(--bg-section), var(--cream-mid));
     }
 
     .photo-hint {
@@ -429,14 +438,14 @@
     .about-bio {
       font-size: 1rem;
       line-height: 1.9;
-      color: var(--text-muted);
+      color: var(--text-mid);
       margin-bottom: 48px;
       min-height: 120px;
       cursor: none;
     }
 
     .bio-clickable {
-      color: var(--cream);
+      color: var(--text-dark);
       border-bottom: 1px dashed var(--orange);
       padding-bottom: 2px;
     }
@@ -446,7 +455,7 @@
       color: var(--orange);
       letter-spacing: 0.15em;
       margin-top: 12px;
-      opacity: 0.7;
+      opacity: 0.8;
     }
 
     .skills-list {
@@ -456,19 +465,19 @@
     }
 
     .skill-tag {
-      background: transparent;
-      border: 1px solid var(--brown-mid);
-      color: var(--text-muted);
+      background: var(--orange-light);
+      border: 1px solid var(--brown-light);
+      color: var(--text-mid);
       padding: 6px 14px;
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
       font-family: 'Bebas Neue', sans-serif;
       font-size: 0.9rem;
+      letter-spacing: 0.1em;
     }
 
     /* ===== CONTACT ===== */
     #contact {
-      background: linear-gradient(to bottom, #200F04, var(--bg));
+      background: linear-gradient(to bottom, var(--bg-warm), var(--bg));
+      padding-bottom: 120px;
     }
 
     .contact-layout {
@@ -496,15 +505,15 @@
 
     .form-input,
     .form-textarea {
-      background: var(--brown);
-      border: 1px solid var(--brown-mid);
+      background: var(--cream);
+      border: 1px solid var(--brown-light);
       border-bottom: 2px solid var(--orange-dark);
-      color: var(--cream);
+      color: var(--text-dark);
       padding: 14px 16px;
       font-family: 'Kiwi Maru', serif;
       font-size: 0.9rem;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, background 0.2s;
       cursor: none;
     }
 
@@ -517,6 +526,7 @@
     .form-input:focus,
     .form-textarea:focus {
       border-color: var(--orange);
+      background: var(--cream);
     }
 
     .form-textarea {
@@ -540,22 +550,13 @@
 
     .submit-btn:hover {
       background: var(--orange);
-      color: var(--bg);
+      color: var(--cream);
       transform: scale(1.02);
     }
 
     /* ===== SNS ===== */
-    /* ===== CONTACTセクション全体の設定を追加 ===== */
-    #contact {
-      padding-bottom: 120px;
-      /* 下側にたっぷり余白を作る */
-    }
-
-    /* ここから下の .contact-sns は今のコードのままでOKですが、
-   margin-top を少し詰めるとボタンとの一体感が出ます */
     .contact-sns {
       margin-top: 40px;
-      /* 60pxから40pxに少し詰めました */
       display: flex;
       align-items: center;
       gap: 24px;
@@ -587,13 +588,11 @@
       fill: var(--orange);
     }
 
-    /* 1.0サイトリンクのスタイル：青色と下線をサヨナラさせる */
     .version-link {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 0.95rem;
       color: var(--text-muted);
       text-decoration: none;
-      /* 下線を消す */
       letter-spacing: 0.15em;
       border-bottom: 1px solid transparent;
       transition: all 0.3s ease;
@@ -605,7 +604,6 @@
     .version-link:hover {
       color: var(--orange);
       border-bottom-color: var(--orange);
-      filter: drop-shadow(0 0 5px var(--orange));
     }
 
     /* ===== DIVIDER ===== */
@@ -623,7 +621,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top: 1px solid var(--brown);
+      border-top: 1px solid var(--brown-light);
     }
 
     footer p {
@@ -661,7 +659,6 @@
       animation: fadeInUp 0.6s ease 0.65s both;
     }
 
-    /* shake animation */
     @keyframes shake {
 
       0%,
@@ -690,7 +687,6 @@
       animation: shake 0.5s ease;
     }
 
-    /* scroll reveal */
     .reveal {
       opacity: 0;
       transform: translateY(40px);
@@ -702,7 +698,6 @@
       transform: translateY(0);
     }
 
-    /* stagger children */
     .reveal-group>* {
       opacity: 0;
       transform: translateY(30px);
@@ -712,10 +707,8 @@
     .reveal-group.visible>* {
       opacity: 1;
       transform: translateY(0);
-      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
-    /* 1. 激しい揺れ（z-indexを上げて一番手前に表示させる） */
     @keyframes mega-shake {
       0% {
         transform: translateY(-50%) translate(0, 0) rotate(0deg);
@@ -740,58 +733,46 @@
 
     .shaking-text {
       animation: mega-shake 0.1s infinite !important;
-      /* 0.1秒で超高速ループ */
       z-index: 10001 !important;
-      /* オーバーレイより上に表示！ */
       color: #fff !important;
-      /* 揺れている間は見やすいように白くする */
       opacity: 1 !important;
     }
 
-    /* 2. サイケデリックなチカチカ背景 */
     @keyframes psych-flicker {
       0% {
-        background-color: #ff0000;
+        background-color: #ff4444;
       }
 
-      /* 赤 */
       20% {
-        background-color: #00ff00;
+        background-color: #44cc44;
       }
 
-      /* 緑 */
       40% {
-        background-color: #0000ff;
+        background-color: #4444ff;
       }
 
-      /* 青 */
       60% {
-        background-color: #ffff00;
+        background-color: #ffcc00;
       }
 
-      /* 黄 */
       80% {
-        background-color: #ff00ff;
+        background-color: #ff44cc;
       }
 
-      /* 紫 */
       100% {
-        background-color: #00ffff;
+        background-color: #44ccff;
       }
-
-      /* 水色 */
     }
 
     .psychedelic-bg {
       animation: psych-flicker 0.1s infinite !important;
-      /* 0.1秒ごとに色を変える */
     }
 
-    /* モーダル全体の背景（暗くする部分） */
+    /* ===== MODAL ===== */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(10, 5, 2, 0.9);
+      background: rgba(255, 240, 216, 0.88);
       z-index: 20000;
       display: flex;
       align-items: center;
@@ -800,6 +781,7 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
       padding: 20px;
+      backdrop-filter: blur(4px);
     }
 
     .modal-overlay.show {
@@ -807,15 +789,15 @@
       pointer-events: all;
     }
 
-    /* モーダルの箱 */
     .modal-content {
-      background: var(--brown);
+      background: var(--cream);
       width: 100%;
       max-width: 600px;
       padding: 40px;
       position: relative;
       clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
-      border: 1px solid var(--brown-mid);
+      border: 1px solid var(--brown-light);
+      box-shadow: 0 8px 40px rgba(160, 80, 30, 0.15);
       transform: translateY(20px);
       transition: transform 0.3s ease;
     }
@@ -824,7 +806,6 @@
       transform: translateY(0);
     }
 
-    /* 閉じるボタン */
     .modal-close {
       position: absolute;
       top: 20px;
@@ -837,44 +818,38 @@
       font-family: 'Dela Gothic One', sans-serif;
     }
 
-    /* モーダル内のテキスト */
-    /* 360行目付近：モーダルタイトルの潰れを物理的に解除 */
     #modal-title {
       font-family: 'Dela Gothic One', sans-serif;
       color: var(--orange);
       font-size: 1.8rem;
       margin-bottom: 10px;
-
-      /* ↓ 物理解除セット ↓ */
       transform: none !important;
       display: block !important;
       height: auto !important;
       line-height: 1.4 !important;
-      /* お餅回避のスペース */
       font-weight: 400 !important;
     }
 
     #modal-description {
       line-height: 1.8;
-      color: var(--cream);
+      color: var(--text-mid);
       white-space: pre-wrap;
-      /* 改行を反映させる */
     }
 
     #modal-image-wire {
       width: 100%;
       aspect-ratio: 16/9;
-      background: var(--bg);
+      background: var(--bg-section);
       margin-bottom: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
+      border: 1px solid var(--brown-light);
     }
 
-    /* ===== GACHA BUTTON STYLE ===== */
+    /* ===== GACHA BUTTON ===== */
     .gacha-btn-container {
-      text-align: center;
-      /* ボタンを中央寄せにする場合 */
+      text-align: left;
       margin-top: 20px;
     }
 
@@ -883,32 +858,22 @@
       position: relative;
       font-family: 'Dela Gothic One', sans-serif;
       font-size: 1.1rem;
-      color: var(--bg);
-      /* 文字色は背景色（濃い茶色） */
+      color: var(--cream);
       text-decoration: none;
       background-color: var(--orange);
-      /* ボタンの基本色 */
       padding: 12px 24px;
       border: none;
       border-radius: 8px;
-      /* 少し角丸 */
-
-      /* 立体感を出すための影（ボタンの厚み） */
       box-shadow: 0 6px 0 var(--orange-dark);
-
-      /* クリック時のアニメーション設定 */
       transition: all 0.1s ease;
       cursor: pointer;
     }
 
-    /* ホバー時（マウスを乗せた時）の少し明るくなる演出 */
     .gacha-push-btn:hover {
       background-color: var(--orange-bright);
     }
 
-    /* ★アクティブ時（クリックした瞬間）の押し込まれる演出 */
     .gacha-push-btn:active {
-      /* 影を小さくして、位置を少し下に下げることで「押し込んだ」感を出す */
       box-shadow: 0 2px 0 var(--orange-dark);
       transform: translateY(4px);
     }
@@ -920,10 +885,11 @@
   <!-- CURSOR -->
   <div id="cursor">🥚</div>
 
-  <!-- LAUGH OVERLAY (shown on page load) -->
+  <!-- LAUGH OVERLAY -->
   <div id="laugh-overlay">
     ＼ようこそ！／<br>
-    <span style="font-size:0.45em; margin-top:16px; display:block; color: rgba(26,14,6,0.6);">本当の声はもうちょっと高いです。</span>
+    <span
+      style="font-size:0.45em; margin-top:16px; display:block; color: rgba(255,255,255,0.7);">本当の声はもうちょっと高いです。</span>
   </div>
 
   <!-- NAV -->
@@ -1055,48 +1021,42 @@
 
 
   <script>
-    // ページ読み込み時に作品カードを自動生成
     function renderWorks() {
       const grid = document.getElementById('worksGrid');
       if (!grid) return;
 
-      // worksList（worksData.jsで定義したもの）をループで回す
       worksList.forEach(work => {
         const card = document.createElement('div');
         card.className = 'work-card reveal';
         card.dataset.title = work.title;
         card.dataset.desc = work.desc;
-        card.dataset.sound = work.sound; // ここに "2" や "3" が入っている前提
+        card.dataset.sound = work.sound;
 
-        // 【追加】マウスオーバー（ホバー）時に自作音を鳴らす
         card.onmouseenter = () => {
           const soundNum = work.sound;
           if (soundNum) {
             const hoverSound = new Audio(`sounds/${soundNum}.mp3`);
-            hoverSound.volume = 0.4; // ホバー音は少し控えめに（お好みで調整）
-            hoverSound.currentTime = 0; // 連続で触っても最初から再生
+            hoverSound.volume = 0.4;
+            hoverSound.currentTime = 0;
             hoverSound.play().catch(e => console.log("再生ブロックされました:", e));
           }
         };
 
-        // クリックイベントを設定
         card.onclick = () => playWorkSound(card);
 
-        // 内部のHTML構築
         card.innerHTML = `
-      <div class="work-card-inner">
-        <img src="${work.img}" alt="${work.title}">
-      </div>
-      <div class="work-card-label">
-        <strong>${work.title}</strong>
-        <span>${work.note || "2024 / PROTOTYPE"}</span>
-      </div>
-    `;
+          <div class="work-card-inner">
+            <img src="${work.img}" alt="${work.title}">
+          </div>
+          <div class="work-card-label">
+            <strong>${work.title}</strong>
+            <span>${work.note || "2024 / PROTOTYPE"}</span>
+          </div>
+        `;
         grid.appendChild(card);
       });
     }
 
-    // 実行！
     renderWorks();
 
     // ===== CURSOR =====
@@ -1106,35 +1066,28 @@
       cursor.style.top = e.clientY + 'px';
     });
 
-    // ===== LAUGH ON LOAD は削除しました =====
-
     function playLaugh() {
       const overlay = document.getElementById('laugh-overlay');
       const bgText = document.querySelector('.hero-bg-text');
 
-      // 音声を読み込む
       const laugh = new Audio('laughs/laugh_1.mp3');
 
-      // 1. 演出を開始
-      overlay.classList.add('show', 'psychedelic-bg'); // 背景を表示＋チカチカ開始
-      bgText.classList.add('shaking-text');           // 文字を一番手前で揺らす
+      overlay.classList.add('show', 'psychedelic-bg');
+      bgText.classList.add('shaking-text');
 
       laugh.play();
 
-      // 2. 音が終わったらすべてを元に戻す
       laugh.onended = function () {
         overlay.classList.remove('show', 'psychedelic-bg');
         bgText.classList.remove('shaking-text');
       };
 
-      // ※念のための予備：音が何らかの理由で鳴らなくても、5秒後には必ず止まるようにする
       setTimeout(() => {
         overlay.classList.remove('show', 'psychedelic-bg');
         bgText.classList.remove('shaking-text');
       }, 5000);
     }
 
-    // ===== WORK HOVER SOUND (Web Audio API でポップ音を生成) =====
     function makeBeep(type) {
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1152,22 +1105,18 @@
       } catch (e) { }
     }
 
-
     function playWorkSound(card) {
-      // 1. 振動アニメーションの追加
       card.classList.remove('shake');
       void card.offsetWidth;
       card.classList.add('shake');
 
-      // 2. ★サウンドの動的再生（ここを修正）
-      const soundNum = card.dataset.sound; // worksData.js で指定した数字を取得
+      const soundNum = card.dataset.sound;
       if (soundNum) {
         const workSound = new Audio(`sounds/${soundNum}.mp3`);
         workSound.currentTime = 0;
         workSound.play().catch(e => console.log("再生エラー:", e));
       }
 
-      // 3. モーダルにデータをセットして表示
       const modal = document.getElementById('work-modal');
       const title = document.getElementById('modal-title');
       const desc = document.getElementById('modal-description');
@@ -1184,15 +1133,11 @@
       modal.classList.add('show');
     }
 
-    // モーダルを閉じる関数
     function closeModal(event) {
       document.getElementById('work-modal').classList.remove('show');
-      makeBeep('pop'); // 閉じる時も「ポッ」と鳴らすとかわいい
+      makeBeep('pop');
     }
-    // 既存のWeb Audio（ビープ音）も残したければそのままでOK
-    //makeBeep(card.dataset.sound);
 
-    // ===== PHOTO CYCLE (ランダム表示版) =====
     const profileImages = [
       '/Users/pastamac/Desktop/MY HP/profiles/profile_1.jpg',
       '/Users/pastamac/Desktop/MY HP/profiles/profile_2.jpg',
@@ -1208,19 +1153,11 @@
 
     function cyclePhoto() {
       const imgElement = document.getElementById('profileImg');
-
-      // 10枚の中からランダムに選ぶ
       const randomIndex = Math.floor(Math.random() * profileImages.length);
-
-      // 画像を切り替え
       imgElement.src = profileImages[randomIndex];
-
-      // 音を鳴らす
       makeBeep('pop');
     }
 
-    // ===== RANDOM BIO =====
-    // ===== RANDOM BIO (ランダムガチャ版) =====
     const bios = [
       ['ロフトワークのクリエイティブディレクターです。', 'どんなプロジェクトもバッチこい。'],
       ['二つ名：賢そうなバカ・ダーティープロトタイパー、マッチ', 'おさなごころをポケットに。'],
@@ -1235,11 +1172,10 @@
       ['歌いがち。', 'マイケルジャクソンみたいに変な音はさみがち。']
     ];
 
-    let currentBioIdx = -1; // 現在表示されている番号を記憶
+    let currentBioIdx = -1;
 
     function changeBio() {
       let newIdx;
-
       do {
         newIdx = Math.floor(Math.random() * bios.length);
       } while (newIdx === currentBioIdx);
@@ -1248,28 +1184,25 @@
       const b = bios[currentBioIdx];
       const p = document.getElementById('bioText');
 
-      // 修正後のHTML構造
       p.innerHTML = `
-    ${b[0]}<br>
-    ${b[1]}<br>
-    <div class="gacha-btn-container">
-      <button class="gacha-push-btn" onclick="changeBio()">もう一回ガチャを引く</button>
-    </div>
-  `;
+        ${b[0]}<br>
+        ${b[1]}<br>
+        <div class="gacha-btn-container">
+          <button class="gacha-push-btn" onclick="changeBio()">もう一回ガチャを引く</button>
+        </div>
+      `;
 
       makeBeep('boing');
     }
 
-    // ===== SUBMIT (Formspree連携版) =====
     async function handleSubmit(e) {
-      e.preventDefault(); // 画面遷移を止める
+      e.preventDefault();
 
       const btn = e.target;
       const form = document.getElementById('contactForm');
       const formData = new FormData(form);
       const origText = btn.textContent;
 
-      // 送信中の表示
       btn.textContent = '送信中...';
       btn.style.pointerEvents = 'none';
 
@@ -1281,23 +1214,19 @@
         });
 
         if (response.ok) {
-          // 送信成功！
           btn.textContent = '✓ ありがとうございました！';
           btn.style.background = 'var(--orange)';
-          btn.style.color = 'var(--bg)';
+          btn.style.color = 'var(--cream)';
           if (typeof makeBeep === 'function') makeBeep('pop');
-          form.reset(); // 入力欄を空にする
+          form.reset();
         } else {
-          // Formspree側からのエラー回答
           const errorData = await response.json();
           btn.textContent = '送信失敗：' + (errorData.error || 'エラー');
         }
       } catch (error) {
-        // ネットワークエラーなど
         btn.textContent = '接続エラーが発生しました';
       }
 
-      // 4秒後にボタンの状態を戻す
       setTimeout(() => {
         btn.textContent = origText;
         btn.style.background = '';
