@@ -176,14 +176,21 @@
     .hero-title {
       font-family: 'Dela Gothic One', sans-serif;
       font-size: clamp(48px, 9vw, 120px);
-      line-height: 0.95;
+      /* 行間を1.1程度に。これ以上狭いとまた潰れます */
+      line-height: 1 !important;
       color: var(--cream);
       margin-bottom: 24px;
+      /* 物理解除 */
+      transform: none !important;
+      display: block !important;
+      height: auto !important;
     }
 
     .hero-title span {
       color: var(--orange);
       display: block;
+      /* ここがポイント：マイナスのマージンで「Buster.」を上に引き寄せます */
+      margin-top: -0.5em;
     }
 
     .hero-desc {
@@ -342,6 +349,14 @@
       display: block !important;
       height: auto !important;
 
+      /* 2. 行間を「文字の高さ＋余白」分しっかり取る（潰れ感の解消） */
+      line-height: 1.5 !important;
+
+      /* 3. 文字同士がめり込まないように少し隙間を作る */
+      letter-spacing: 0.05em !important;
+
+      /* 4. 上下に少し余白（パディング）を作って、文字を呼吸させる */
+      padding: 10px 0 !important;
 
       /* 5. 念のためフォントの太さをリセット（このフォントは太さ固定です） */
       font-weight: 400 !important;
@@ -823,11 +838,20 @@
     }
 
     /* モーダル内のテキスト */
+    /* 360行目付近：モーダルタイトルの潰れを物理的に解除 */
     #modal-title {
       font-family: 'Dela Gothic One', sans-serif;
       color: var(--orange);
       font-size: 1.8rem;
       margin-bottom: 10px;
+
+      /* ↓ 物理解除セット ↓ */
+      transform: none !important;
+      display: block !important;
+      height: auto !important;
+      line-height: 1.4 !important;
+      /* お餅回避のスペース */
+      font-weight: 400 !important;
     }
 
     #modal-description {
@@ -993,24 +1017,35 @@
       // worksList（worksData.jsで定義したもの）をループで回す
       worksList.forEach(work => {
         const card = document.createElement('div');
-        card.className = 'work-card reveal'; // revealクラスも忘れずに
+        card.className = 'work-card reveal';
         card.dataset.title = work.title;
         card.dataset.desc = work.desc;
-        card.dataset.sound = work.sound;
+        card.dataset.sound = work.sound; // ここに "2" や "3" が入っている前提
+
+        // 【追加】マウスオーバー（ホバー）時に自作音を鳴らす
+        card.onmouseenter = () => {
+          const soundNum = work.sound;
+          if (soundNum) {
+            const hoverSound = new Audio(`sounds/${soundNum}.mp3`);
+            hoverSound.volume = 0.4; // ホバー音は少し控えめに（お好みで調整）
+            hoverSound.currentTime = 0; // 連続で触っても最初から再生
+            hoverSound.play().catch(e => console.log("再生ブロックされました:", e));
+          }
+        };
 
         // クリックイベントを設定
         card.onclick = () => playWorkSound(card);
 
-        // renderWorks関数の中の innerHTML 部分
+        // 内部のHTML構築
         card.innerHTML = `
-  <div class="work-card-inner">
-    <img src="${work.img}" alt="${work.title}">
-  </div>
-  <div class="work-card-label">
-    <strong>${work.title}</strong>
-    <span>2024 / PROTOTYPE</span>
-  </div>
-`;
+      <div class="work-card-inner">
+        <img src="${work.img}" alt="${work.title}">
+      </div>
+      <div class="work-card-label">
+        <strong>${work.title}</strong>
+        <span>${work.note || "2024 / PROTOTYPE"}</span>
+      </div>
+    `;
         grid.appendChild(card);
       });
     }
@@ -1071,20 +1106,22 @@
       } catch (e) { }
     }
 
-    document.querySelectorAll('.work-card').forEach(card => {
-      card.addEventListener('mouseenter', () => makeBeep(card.dataset.sound));
-    });
 
     function playWorkSound(card) {
+      // 1. 振動アニメーションの追加
       card.classList.remove('shake');
-      void card.offsetWidth; // アニメーションのリセット用
+      void card.offsetWidth;
       card.classList.add('shake');
 
-      // 指定したサウンドを再生
-      const workSound = new Audio('sounds/2.mp3');
-      workSound.currentTime = 0; // 連続クリックでも最初から再生
-      workSound.play();
-      // 2. モーダルにデータをセットして表示
+      // 2. ★サウンドの動的再生（ここを修正）
+      const soundNum = card.dataset.sound; // worksData.js で指定した数字を取得
+      if (soundNum) {
+        const workSound = new Audio(`sounds/${soundNum}.mp3`);
+        workSound.currentTime = 0;
+        workSound.play().catch(e => console.log("再生エラー:", e));
+      }
+
+      // 3. モーダルにデータをセットして表示
       const modal = document.getElementById('work-modal');
       const title = document.getElementById('modal-title');
       const desc = document.getElementById('modal-description');
@@ -1093,7 +1130,6 @@
       title.textContent = card.dataset.title;
       desc.textContent = card.dataset.desc;
 
-      // カード内の画像を取得してモーダルにも表示
       const cardImg = card.querySelector('img');
       if (cardImg) {
         imgContainer.innerHTML = `<img src="${cardImg.src}" style="width:100%; height:100%; object-fit:contain;">`;
