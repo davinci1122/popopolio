@@ -256,11 +256,17 @@
       margin-bottom: 8px;
     }
 
+    /* 自己紹介ガチャやWORKSのタイトル部分 */
     .section-title {
       font-family: 'Dela Gothic One', sans-serif;
-      font-size: clamp(36px, 6vw, 80px);
+      font-size: clamp(30px, 6vw, 80px);
       color: var(--cream);
-      line-height: 1;
+
+      /* ↓ここがポイント：1.2〜1.3くらいに広げると潰れが解消されます */
+      line-height: 1 !important;
+
+      /* ↓文字が横に詰まりすぎている場合はこれも追加 */
+      /*letter-spacing: 0.02em; */
     }
 
     .works-grid {
@@ -269,47 +275,48 @@
       gap: 24px;
     }
 
+    /* ===== WORKS関連の修正（画像サイズとテキストを整える） ===== */
     .work-card {
       position: relative;
       background: var(--brown);
       aspect-ratio: 4/3;
+      /* これでカードの形を固定します */
       overflow: hidden;
       cursor: none;
-      transition: transform 0.3s;
       clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
-    }
-
-    .work-card:hover {
-      transform: translateY(-6px) rotate(0.5deg);
     }
 
     .work-card-inner {
       width: 100%;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      background: linear-gradient(135deg, var(--brown-mid), var(--brown));
-      transition: filter 0.3s;
+      display: block;
+      /* 横並びを防ぐため block に変更 */
+      /* ★重要：以前の font-size: 4rem; は必ず消してください */
     }
 
-    .work-card:hover .work-card-inner {
-      filter: brightness(1.15);
+    .work-card-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* 画像を枠いっぱいに、かつ歪ませずに表示 */
+      display: block;
     }
 
+    /* ラベル（文字部分）を画像の上に重ねる設定 */
     .work-card-label {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
       background: linear-gradient(to top, rgba(26, 14, 6, 0.95), transparent);
-      padding: 20px 16px 14px;
-      font-size: 0.85rem;
+      padding: 20px 16px;
+      /* ★重要：フォントサイズを普通の大きさに固定 */
+      font-size: 0.85rem !important;
       color: var(--cream);
+      pointer-events: none;
       opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.3s, transform 0.3s;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
     }
 
     .work-card:hover .work-card-label {
@@ -320,9 +327,24 @@
     .work-card-label strong {
       display: block;
       font-family: 'Dela Gothic One', sans-serif;
-      font-size: 1rem;
+      font-size: 1rem !important;
+      /* 作品名も適切なサイズに */
       color: var(--orange);
       margin-bottom: 2px;
+    }
+
+    .section-title,
+    .hero-title {
+      font-family: 'Dela Gothic One', sans-serif;
+
+      /* 1. 縦横比を強制リセット（どこかで scaleY がかかっているのを防ぐ） */
+      transform: none !important;
+      display: block !important;
+      height: auto !important;
+
+
+      /* 5. 念のためフォントの太さをリセット（このフォントは太さ固定です） */
+      font-weight: 400 !important;
     }
 
     /* ===== ABOUT ===== */
@@ -876,69 +898,10 @@
       <div class="divider"></div>
     </div>
 
-    <div class="works-grid reveal-group">
-      <div class="work-card" data-sound="boing" onclick="playWorkSound(this)">
-        <div class="work-card-inner">
-          <img src="WORKS/work_1.jpg" alt="Work 01" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        <div class="work-card-label">
-          <strong>作品タイトル 01</strong>
-          2024 / デジタル
-        </div>
-      </div>
-      <div class="work-card" data-sound="pop" data-title="作品タイトル 01" data-desc="ここに詳しい説明文を入れます。改行もできます。"
-        onclick="playWorkSound(this)">
-        <div class="work-card-inner">
-          <img src="/Users/pastamac/Desktop/MY HP/WORKS/work_1.jpg" alt="Work 01"
-            style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        <div class="work-card-label">
-          <strong>作品タイトル 02</strong>
-          2024 / アナログ
-        </div>
-      </div>
-      <div class="work-card" data-sound="honk" onclick="playWorkSound(this)">
-        <div class="work-card-inner">
-          <img src="/Users/pastamac/Desktop/MY HP/WORKS/work_1.jpg" alt="Work 01"
-            style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        <div class="work-card-label">
-          <strong>作品タイトル 03</strong>
-          2023 / 混合
-        </div>
-      </div>
-      <div class="work-card" data-sound="boing" onclick="playWorkSound(this)">
-        <div class="work-card-inner">
-          <img src="/Users/pastamac/Desktop/MY HP/WORKS/work_1.jpg" alt="Work 01"
-            style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        <div class="work-card-label">
-          <strong>作品タイトル 04</strong>
-          2023 / デジタル
-        </div>
-      </div>
-      <div class="work-card" data-sound="pop" onclick="playWorkSound(this)">
-        <div class="work-card-inner">
-          <img src="/Users/pastamac/Desktop/MY HP/WORKS/work_1.jpg" alt="Work 01"
-            style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        <div class="work-card-label">
-          <strong>作品タイトル 05</strong>
-          2023 / アナログ
-        </div>
-      </div>
-      <div class="work-card" data-sound="honk" onclick="playWorkSound(this)">
-        <div class="work-card-inner">
-          <img src="/Users/pastamac/Desktop/MY HP/WORKS/work_1.jpg" alt="Work 01"
-            style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        <div class="work-card-label">
-          <strong>作品タイトル 06</strong>
-          2022 / デジタル
-        </div>
-      </div>
-    </div>
+    <div id="worksGrid" class="works-grid"></div>
   </section>
+
+  <script src="worksData.js"></script>
 
   <!-- ===== ABOUT ===== -->
   <section id="about">
@@ -1022,6 +985,39 @@
 
 
   <script>
+    // ページ読み込み時に作品カードを自動生成
+    function renderWorks() {
+      const grid = document.getElementById('worksGrid');
+      if (!grid) return;
+
+      // worksList（worksData.jsで定義したもの）をループで回す
+      worksList.forEach(work => {
+        const card = document.createElement('div');
+        card.className = 'work-card reveal'; // revealクラスも忘れずに
+        card.dataset.title = work.title;
+        card.dataset.desc = work.desc;
+        card.dataset.sound = work.sound;
+
+        // クリックイベントを設定
+        card.onclick = () => playWorkSound(card);
+
+        // renderWorks関数の中の innerHTML 部分
+        card.innerHTML = `
+  <div class="work-card-inner">
+    <img src="${work.img}" alt="${work.title}">
+  </div>
+  <div class="work-card-label">
+    <strong>${work.title}</strong>
+    <span>2024 / PROTOTYPE</span>
+  </div>
+`;
+        grid.appendChild(card);
+      });
+    }
+
+    // 実行！
+    renderWorks();
+
     // ===== CURSOR =====
     const cursor = document.getElementById('cursor');
     document.addEventListener('mousemove', e => {
