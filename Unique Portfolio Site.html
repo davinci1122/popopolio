@@ -665,46 +665,22 @@
       transition-delay: 0.5s;
     }
 
-    /* 激しい揺れの定義 */
+    /* 1. 激しい揺れ（z-indexを上げて一番手前に表示させる） */
     @keyframes mega-shake {
       0% {
         transform: translateY(-50%) translate(0, 0) rotate(0deg);
       }
 
-      10% {
-        transform: translateY(-50%) translate(-20px, -10px) rotate(-5deg);
-      }
-
-      20% {
-        transform: translateY(-50%) translate(20px, 10px) rotate(5deg);
-      }
-
-      30% {
-        transform: translateY(-50%) translate(-20px, 10px) rotate(-3deg);
-      }
-
-      40% {
-        transform: translateY(-50%) translate(20px, -10px) rotate(3deg);
+      25% {
+        transform: translateY(-50%) translate(-30px, 20px) rotate(-10deg);
       }
 
       50% {
-        transform: translateY(-50%) translate(-10px, 10px) rotate(-1deg);
+        transform: translateY(-50%) translate(30px, -20px) rotate(10deg);
       }
 
-      60% {
-        transform: translateY(-50%) translate(10px, -10px) rotate(1deg);
-      }
-
-      70% {
-        transform: translateY(-50%) translate(-20px, 10px) rotate(-5deg);
-      }
-
-      80% {
-        transform: translateY(-50%) translate(20px, -10px) rotate(5deg);
-      }
-
-      90% {
-        transform: translateY(-50%) translate(-10px, -10px) rotate(-2deg);
+      75% {
+        transform: translateY(-50%) translate(-30px, -20px) rotate(-5deg);
       }
 
       100% {
@@ -712,13 +688,53 @@
       }
     }
 
-    /* 揺れを適用するクラス */
     .shaking-text {
-      animation: mega-shake 0.15s infinite;
-      /* 0.15秒周期でループ */
-      color: var(--orange) !important;
-      /* 揺れている間だけ色を変えるとさらに目立ちます */
-      opacity: 0.8 !important;
+      animation: mega-shake 0.1s infinite !important;
+      /* 0.1秒で超高速ループ */
+      z-index: 10001 !important;
+      /* オーバーレイより上に表示！ */
+      color: #fff !important;
+      /* 揺れている間は見やすいように白くする */
+      opacity: 1 !important;
+    }
+
+    /* 2. サイケデリックなチカチカ背景 */
+    @keyframes psych-flicker {
+      0% {
+        background-color: #ff0000;
+      }
+
+      /* 赤 */
+      20% {
+        background-color: #00ff00;
+      }
+
+      /* 緑 */
+      40% {
+        background-color: #0000ff;
+      }
+
+      /* 青 */
+      60% {
+        background-color: #ffff00;
+      }
+
+      /* 黄 */
+      80% {
+        background-color: #ff00ff;
+      }
+
+      /* 紫 */
+      100% {
+        background-color: #00ffff;
+      }
+
+      /* 水色 */
+    }
+
+    .psychedelic-bg {
+      animation: psych-flicker 0.1s infinite !important;
+      /* 0.1秒ごとに色を変える */
     }
   </style>
 </head>
@@ -731,8 +747,7 @@
   <!-- LAUGH OVERLAY (shown on page load) -->
   <div id="laugh-overlay">
     ＼ようこそ！／<br>
-    <span
-      style="font-size:0.45em; margin-top:16px; display:block; color: rgba(26,14,6,0.6);">音量注意だよ。いうよりも先にまず鳴るけどね。</span>
+    <span style="font-size:0.45em; margin-top:16px; display:block; color: rgba(26,14,6,0.6);">本当の声はもうちょっと高いです。</span>
   </div>
 
   <!-- NAV -->
@@ -760,7 +775,7 @@
         とりいそぎ、作ってみてます。
       </p>
       <button class="laugh-btn" onclick="playLaugh()">
-        🎤 笑い声が気になる方向けのボタン
+        🎤 笑い声が気になる方向けのボタン（音量・点滅注意!!!）
       </button>
     </div>
   </section>
@@ -910,32 +925,32 @@
             cursor.style.top = e.clientY + 'px';
           });
 
-          // ===== LAUGH ON LOAD =====
-          const overlay = document.getElementById('laugh-overlay');
-          window.addEventListener('load', () => {
-            overlay.classList.add('show');
-
-            // ここを書き換え：音声を読み込んで再生
-            const laugh = new Audio('laughs/laugh_1.mp3');
-            laugh.play().catch(e => console.log("Autoplay blocked: クリックされるまで再生されません"));
-
-            setTimeout(() => {
-              overlay.style.transition = 'opacity 0.8s';
-              overlay.classList.remove('show');
-              setTimeout(() => overlay.style.pointerEvents = 'none', 800);
-            }, 2000);
-          });
+          // ===== LAUGH ON LOAD は削除しました =====
 
           function playLaugh() {
-            overlay.classList.add('show');
+            const overlay = document.getElementById('laugh-overlay');
+            const bgText = document.querySelector('.hero-bg-text');
 
-            // ここを書き換え：ボタンを押した時も同じ音を鳴らす
+            // 音声を読み込む
             const laugh = new Audio('laughs/laugh_1.mp3');
+
+            // 1. 演出を開始
+            overlay.classList.add('show', 'psychedelic-bg'); // 背景を表示＋チカチカ開始
+            bgText.classList.add('shaking-text');           // 文字を一番手前で揺らす
+
             laugh.play();
 
+            // 2. 音が終わったらすべてを元に戻す
+            laugh.onended = function () {
+              overlay.classList.remove('show', 'psychedelic-bg');
+              bgText.classList.remove('shaking-text');
+            };
+
+            // ※念のための予備：音が何らかの理由で鳴らなくても、5秒後には必ず止まるようにする
             setTimeout(() => {
-              overlay.classList.remove('show');
-            }, 1500);
+              overlay.classList.remove('show', 'psychedelic-bg');
+              bgText.classList.remove('shaking-text');
+            }, 5000);
           }
 
           // ===== WORK HOVER SOUND (Web Audio API でポップ音を生成) =====
